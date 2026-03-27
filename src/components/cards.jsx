@@ -10,33 +10,28 @@ import { Button, Input, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 export default function IntroDivider() {
+
   let [idx, setIdx] = useState("")
+
   let api = "http://37.27.29.18:8001/api/categories"
 
   let [data, setData] = useState([])
-
   let [addName, setAddName] = useState("")
   let [addAge, setAddAge] = useState("")
   let [addAbout, setAddAbout] = useState("")
-
   let [editName, setEditName] = useState("")
   let [editAge, setEditAge] = useState("")
   let [editAbout, setEditAbout] = useState("")
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
   async function get() {
     try {
       let { data } = await axios.get(api)
@@ -45,9 +40,7 @@ export default function IntroDivider() {
       console.error(error);
     }
   }
-
   async function deleteUser(id) {
-
     try {
       await axios.delete(`${api}?id=${id}`)
       get()
@@ -55,7 +48,6 @@ export default function IntroDivider() {
       console.error(error);
     }
   }
-
   async function hendelSubmit(e) {
     e.preventDefault()
     let newUser = {
@@ -70,29 +62,19 @@ export default function IntroDivider() {
       setAddName("")
       setAddAge("")
       setAddAbout("")
-
     } catch (error) {
       console.error(error);
     }
   }
-
-
-
   useEffect(() => {
     get()
   }, [])
-
-
-
   const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
-
-
   function ddd(id) {
     setIsModalOpenEdit(true)
     setIdx(id.id)
-    setEditName(id.name) 
+    setEditName(id.name)
   }
-
   async function editSubmit(e) {
     e.preventDefault()
     let editUser = {
@@ -102,18 +84,14 @@ export default function IntroDivider() {
     try {
       await axios.put(api, editUser)
       get()
-
       setIsModalOpenEdit(false)
-
       setEditName("")
       setEditAge("")
       setEditAbout("")
     } catch (error) {
       console.error(error);
     }
-
   }
-
   return (
     <>
       <div>
@@ -179,8 +157,6 @@ export default function IntroDivider() {
                   </Typography>
                   <Stack direction="row" spacing={1}>
                     <Chip onClick={() => deleteUser(el.id)} label="Delete" size="small" color='error' />
-
-
                     <Chip onClick={() => ddd(el)} label="Edit" size="small" color='info' />
                     <Modal
                       title="Edit User"
@@ -194,7 +170,6 @@ export default function IntroDivider() {
                           onChange={(e) => setEditName(e.target.value)}
                           value={editName}
                         />
-
                         <div className='mt-[15px] mb-[15px]'>
                           <Input
                             placeholder='User Age'
@@ -202,14 +177,12 @@ export default function IntroDivider() {
                             value={editAge}
                           />
                         </div>
-
                         <TextArea
                           rows={4}
                           placeholder="User About..."
                           value={editAbout}
                           onChange={(e) => setEditAbout(e.target.value)}
                         />
-
                         <Button htmlType="submit" type="primary" className="mt-4">
                           Save
                         </Button>
