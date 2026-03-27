@@ -47,7 +47,7 @@ export default function IntroDivider() {
   }
 
   async function deleteUser(id) {
-    console.log("delete", id)
+
     try {
       await axios.delete(`${api}?id=${id}`)
       get()
@@ -215,7 +215,6 @@ export default function IntroDivider() {
                         </Button>
                       </form>
                     </Modal>
-                    <Chip label="Hard" size="small" />
                   </Stack>
                 </Box>
               </Card >
