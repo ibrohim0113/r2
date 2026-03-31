@@ -1,23 +1,24 @@
-import { BrowserRouter, Route, Routes } from 'react-router'
-import Leaut from './Leaut/leaut'
-import Manifold from './components/Manifold'
-import Services from './components/Services'
-import Info from './components/info'
+import { useState, useCallback } from "react";
+import { Card } from "./Card";
+function App() {
+  const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
-const App = () => {
+  const handleClick = useCallback(() => {
+    console.log("Clicked");
+  }, []);
+
+  console.log("Parent render");
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Leaut />} >
-            <Route index={true} element={<Manifold />} />
-            <Route path="/Services" element={<Services />} />
-            <Route path="/Services/product/:productId" element={<Info />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <p>{count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment Count 1</button>
+      <p>{count2}</p>
+      <button onClick={() => setCount2(count2 + 1)}>Increment Count 2</button>
+      <Card onClick={handleClick} count={count} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
