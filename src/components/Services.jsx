@@ -1,164 +1,140 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Modal, Button, Input, Card, Popconfirm, message, Upload, Form } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import { Button, Input, Modal } from 'antd'
+import React, { useReducer, useState } from 'react'
 
-class Services extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      api: "http://37.27.29.18:8001/api/to-dos",
-      apiImg: "http://37.27.29.18:8001/images/",
-      isModalOpen: false,
-      editingTodo: null,
-      loading: false,
-      fileList: []
-    };
-    this.formRef = React.createRef();
-  }
-
-  componentDidMount() {
-    this.getData();
-  }
-
-  getData = async () => {
-    try {
-      const res = await axios.get(this.state.api);
-      this.setState({ data: res.data.data || res.data });
-    } catch (error) {
-      message.error("Ошибка загрузки");
+const initialState = {
+  data: [
+    {
+      id: 1,
+      name: "Алишер Назаров",
+      description: "Frontend разработчик, увлекается React и современным дизайном.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alisher"
+    },
+    {
+      id: 2,
+      name: "Елена Смирнова",
+      description: "Project Manager с опытом работы в крупных IT-проектах.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Elena"
+    },
+    {
+      id: 3,
+      name: "Марк Воронов",
+      description: "Backend специалист, мастер Node.js и баз данных PostgreSQL.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mark"
+    },
+    {
+      id: 4,
+      name: "Сабина Саидова",
+      description: "UI/UX дизайнер, создает интуитивно понятные интерфейсы.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sabina"
+    },
+    {
+      id: 5,
+      name: "Дмитрий Волков",
+      description: "QA инженер, знает всё о мануальном и авто-тестировании.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Dmitry"
+    },
+    {
+      id: 6,
+      name: "Анна Кузнецова",
+      description: "Специалист по маркетингу и продвижению в социальных сетях.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Anna"
+    },
+    {
+      id: 7,
+      name: "Тимур Рахимов",
+      description: "Fullstack разработчик, любит экспериментировать с новыми фреймворками.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Timur"
+    },
+    {
+      id: 8,
+      name: "Виктория Ли",
+      description: "Аналитик данных, превращает скучные цифры в понятные отчеты.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Victoria"
+    },
+    {
+      id: 9,
+      name: "Артем Белов",
+      description: "DevOps инженер, отвечает за стабильность и деплой систем.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Artem"
+    },
+    {
+      id: 10,
+      name: "Нигина Хакимова",
+      description: "Content Creator, пишет тексты, которые цепляют аудиторию.",
+      img: "https://api.dicebear.com/7.x/avataaars/svg?seed=Nigina"
     }
-  };
-
-  deleteTodo = async (id) => {
-    try {
-      await axios.delete(`${this.state.api}?id=${id}`);
-      message.success("Удалено");
-      this.getData();
-    } catch (error) {
-      message.error("Ошибка удаления");
-    }
-  };
-
-  onFinish = async (values) => {
-    const { editingTodo, api, fileList } = this.state;
-    this.setState({ loading: true });
-
-    try {
-      let todoId = null;
-
-      if (editingTodo) {
-        await axios.put(api, {
-          id: editingTodo.id,
-          name: values.name,
-          description: values.description
-        });
-        todoId = editingTodo.id;
-        message.success("Данные обновлены");
-      } else {
-        const res = await axios.post(api, values);
-        todoId = res.data.data?.id || res.data.id;
-        message.success("Создано успешно");
+  ],
+  isModalOpen: false
+}
+function reducer(state, action) {
+  switch (action.key) {
+    case "del":
+      return {
+        ...state,
+        data: state.data.filter((el) => el.id !== action.type)
       }
 
-      if (fileList.length > 0 && todoId) {
-        const imgData = new FormData();
-        imgData.append('Images', fileList[0]);
-        await axios.post(`${api}/${todoId}/images`, imgData);
-        message.success("Изображение загружено");
+    case "showModal":
+      return {
+        ...state,
+        isModalOpen: true
       }
 
-      this.handleCancel();
-      this.getData();
-    } catch (error) {
-      message.error("Ошибка операции");
-    }
-  };
+    case "handleOk":
+      return {
+        ...state,
+        isModalOpen: false
+      }
 
-  showModal = (todo = null) => {
-    this.setState({ isModalOpen: true, editingTodo: todo, fileList: [] }, () => {
-      setTimeout(() => {
-        if (todo) {
-          this.formRef.current?.setFieldsValue(todo);
-        } else {
-          this.formRef.current?.resetFields();
-        }
-      }, 100);
-    });
-  };
+    case "handleCancel":
+      return {
+        ...state,
+        isModalOpen: false
+      }
 
-  handleCancel = () => {
-    this.setState({ isModalOpen: false, editingTodo: null });
-  };
-
-  render() {
-    return (
-      <div className="p-6 bg-gray-100 min-h-screen">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold">Управление задачами</h1>
-            <Button type="primary" icon={<PlusOutlined />} onClick={() => this.showModal()}>
-              Добавить
-            </Button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {this.state.data.map((el) => (
-              <Card
-                key={el.id}
-                cover={
-                  <div className="h-40 bg-white flex items-center justify-center overflow-hidden">
-                    {el.images?.length > 0 ? (
-                      <img src={`${this.state.apiImg}${el.images[0].imageName}`} className="w-full h-full object-cover" alt="" />
-                    ) : <span className="text-gray-300">No Image</span>}
-                  </div>
-                }
-                actions={[
-                  <EditOutlined key="edit" onClick={() => this.showModal(el)} />,
-                  <Popconfirm title="Удалить?" onConfirm={() => this.deleteTodo(el.id)}>
-                    <DeleteOutlined key="delete" className="text-red-500" />
-                  </Popconfirm>
-                ]}
-              >
-                <Card.Meta title={el.name} description={el.description} />
-              </Card>
-            ))}
-          </div>
-        </div>
-        <Modal
-          title={this.state.editingTodo ? "Редактировать" : "Создать"}
-          open={this.state.isModalOpen}
-          onCancel={this.handleCancel}
-          footer={null}
-          destroyOnClose
-        >
-          <Form ref={this.formRef} layout="vertical" onFinish={this.onFinish}>
-            <Form.Item name="name" label="Название" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-            <Form.Item name="description" label="Описание" rules={[{ required: true }]}>
-              <Input.TextArea rows={3} />
-            </Form.Item>
-            <Form.Item label="Картинка">
-              <Upload
-                beforeUpload={(file) => { this.setState({ fileList: [file] }); return false; }}
-                fileList={this.state.fileList}
-                onRemove={() => this.setState({ fileList: [] })}
-              >
-                <Button icon={<UploadOutlined />}>Выбрать файл</Button>
-              </Upload>
-            </Form.Item>
-            <div className="flex justify-end gap-2">
-              <Button onClick={this.handleCancel}>Отмена</Button>
-              <Button type="primary" htmlType="submit" loading={this.state.loading}>
-                {this.state.editingTodo ? "Обновить" : "Создать"}
-              </Button>
-            </div>
-          </Form>
-        </Modal>
-      </div>
-    );
+    default:
+      return state
   }
 }
 
-export default Services;
+const Services = () => {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  
+  
+  
+  return (
+    <>
+      {state.data.map(user => (
+        <div key={user.id} style={{ border: "1px solid #ccc", padding: "10px", margin: "10px" }}>
+          <img src={user.img} alt={user.name} width={50} height={50} />
+          <h2>{user.name}</h2>
+          <p>{user.description}</p>
+          <Button onClick={() => dispatch({ key: "del", type: user.id })}>
+            Удалить
+          </Button>
+          <Button
+            type="primary" onClick={() => dispatch({ key: "showModal" })}>
+            Open Modal
+          </Button>
+        </div>
+      ))}
+      <Modal
+        title="Edit User"
+        closable={{ 'aria-label': 'Custom Close Button' }}
+        open={state.isModalOpen}
+        onOk={() => dispatch({ key: "handleOk" })}
+        onCancel={() => dispatch({ key: "handleCancel" })}
+        footer={[null]}
+      >
+        <form onSubmit={hendelSubmit}>
+          <Input className=''></Input>
+          <Input className='mt-3'></Input>
+          <Button
+            type="primary">Submit</Button>
+        </form>
+      </Modal>
+    </>
+  )
+}
+
+export default Services
