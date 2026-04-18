@@ -1,0 +1,120 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "name": "John Doe",
+            "email": "ibrohim09.ny@gmail.com",
+            "password": "12345678"
+        }
+    ],
+    "products": [
+        {
+            "price": 160.00,
+            "nameProduct": "ADIDAS 4DFWD X PARLEY RUNNING SHOES",
+            "about": "Инновационные беговые кроссовки, созданные с использованием переработанного океанического пластика. Подошва 4D напечатана на 3D-принтере.",
+            "color": "#4A69E2",
+            "size": "42, 43, 44, 45",
+            "size2": "Runners",
+            "gender": "Men",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "3",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 120.50,
+            "nameProduct": "NIKE AIR MAX CASUAL CLASSIC",
+            "about": "Стильные повседневные кроссовки с отличной амортизацией. Подходят для длительных прогулок по городу.",
+            "color": "#232321",
+            "size": "38, 39, 40, 41, 42",
+            "size2": "Casual shoes",
+            "gender": "Women",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "4",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 210.00,
+            "nameProduct": "TERREX FREE HIKER 2.0",
+            "about": "Кроссовки для хайкинга с водонепроницаемой мембраной и цепкой подошвой Continental.",
+            "color": "#234D41",
+            "size": "41, 42, 43, 44, 45, 46",
+            "size2": "Hiking",
+            "gender": "Men",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "5",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 145.00,
+            "nameProduct": "JORDAN LUKA 2 BASKETBALL",
+            "about": "Именная модель для баскетбола. Обеспечивает фиксацию стопы при резких рывках и прыжках.",
+            "color": "#F08155",
+            "size": "43, 44, 45, 46, 47",
+            "size2": "Basketball",
+            "gender": "Men",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "6",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 85.00,
+            "nameProduct": "PUMA SMASH V2 SNEAKER",
+            "about": "Классические кеды в теннисном стиле. Простой дизайн и комфортная стелька SoftFoam.",
+            "color": "#C9CCC6",
+            "size": "39, 40, 41, 42",
+            "size2": "Sneaker",
+            "gender": "Women",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "7",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 190.00,
+            "nameProduct": "SKECHERS GO GOLF ELITE",
+            "about": "Профессиональная обувь для гольфа с защитой от влаги и шипованной подошвой для устойчивости.",
+            "color": "#677282",
+            "size": "40, 41, 42, 43, 44",
+            "size2": "Golf",
+            "gender": "Men",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "8",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 135.00,
+            "nameProduct": "REEBOK FLOATRIDE OUTDOOR",
+            "about": "Кроссовки для активного отдыха на природе и легкого бездорожья.",
+            "color": "#925513",
+            "size": "41, 42, 43, 44",
+            "size2": "Outdoor",
+            "gender": "Men",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "9",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 310.00,
+            "nameProduct": "YEEZY BOOST 350 LUX",
+            "about": "Премиальные лайфстайл кроссовки с уникальной технологией амортизации Boost.",
+            "color": "#353336",
+            "size": "38, 39, 40, 41, 42, 43, 44, 45",
+            "size2": "Sneaker",
+            "gender": "Men",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "10",
+            "sizeproduct": "10"
+        },
+        {
+            "price": 115.00,
+            "nameProduct": "NEW BALANCE 574 VINTAGE",
+            "about": "Икона уличного стиля в классическом исполнении из замши и сетки.",
+            "color": "#BB8056",
+            "size": "38, 39, 40, 41, 42",
+            "size2": "Casual shoes",
+            "gender": "Women",
+            "img": "http://localhost:5173/src/components/img/Rectangle%205%20(1).svg",
+            "id": "11",
+            "sizeproduct": "10"
+        }
+    ]
+}
